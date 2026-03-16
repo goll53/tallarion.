@@ -5,22 +5,27 @@
     <title>Талларион | Глава I</title>
     <style>
         body { background: #0a0a0c; color: #d1d1d1; font-family: 'Georgia', serif; line-height: 1.8; margin: 0; padding: 20px; }
-        .container { max-width: 800px; margin: 40px auto; padding: 40px; background: #111; border: 1px solid #333; }
-        h1, h3 { color: #a286c4; text-align: center; }
-        img { width: 100%; border-radius: 5px; margin: 25px 0; }
+        .container { max-width: 800px; margin: 40px auto; padding: 40px; background: #111; border: 1px solid #333; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        h1 { color: #a286c4; text-align: center; border-bottom: 1px solid #333; padding-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        h3 { color: #a286c4; margin-top: 40px; border-left: 3px solid #a286c4; padding-left: 15px; }
+        p { margin-bottom: 20px; text-align: justify; }
+        img { width: 100%; border-radius: 5px; margin: 25px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
         
-        /* Ровные кнопки */
+        /* Исправленные ровные кнопки */
         .nav-container { display: flex; justify-content: space-between; align-items: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #333; }
-        .nav-link { color: #a286c4; text-decoration: none; border: 1px solid #a286c4; padding: 12px 25px; font-weight: bold; font-size: 0.8em; text-transform: uppercase; }
-        .nav-link:hover { background: #a286c4; color: #000; }
+        .nav-link { color: #a286c4; text-decoration: none; border: 1px solid #a286c4; padding: 12px 25px; transition: 0.4s; font-weight: bold; font-size: 0.8em; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-link:hover { background: #a286c4; color: #000; box-shadow: 0 0 15px rgba(162, 134, 196, 0.4); }
 
-        .music-player { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); border: 1px solid #a286c4; border-radius: 50px; padding: 10px; z-index: 1000; }
+        /* Плеер */
+        .music-player { position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: rgba(0,0,0,0.8); border-radius: 50px; padding: 5px; border: 1px solid #a286c4; }
+        #musicBtn { background:none; border:none; color:#a286c4; cursor:pointer; padding:10px; font-weight: bold; font-size: 0.8em; }
     </style>
 </head>
 <body>
+
     <div class="music-player">
         <audio id="bgMusic" src="music.mp3" loop></audio>
-        <button id="musicBtn" style="background:none; border:none; color:#a286c4; cursor:pointer;">🎵 МУЗЫКА</button>
+        <button id="musicBtn">🎵 МУЗЫКА: ВЫКЛ</button>
     </div>
 
     <div class="container">
@@ -54,10 +59,53 @@
 Каждое описание, каждая форма, каждый ярус закрепляется в восприятии, искажённое понимание может изменить его сущность. Не ищите в этих строках привычного порядка или объяснения: мир Таллариона не подчиняется линейной логике и обычным законам.
 Помните, чтение — это акт участия. Вы берёте на себя ответственность за образы, которые сохраняете. Некоторые вещи лучше оставить неполными, ибо полное знание в момент распада опаснее незнания.</p>
 
-        <div class="nav-container">
+         <div class="nav-container">
             <a href="index.html" class="nav-link">← НАЗАД</a>
             <a href="chapter2.html" class="nav-link">К ГЛАВЕ II →</a>
         </div>
     </div>
-    <script src="script.js"></script> </body>
+
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const btn = document.getElementById('musicBtn');
+
+        // Обновление текста кнопки
+        function updateButtonText() {
+            btn.innerText = audio.paused ? "🎵 МУЗЫКА: ВЫКЛ" : "🎵 МУЗЫКА: ВКЛ";
+        }
+
+        // 1. Проверка при загрузке (подхватываем музыку с прошлой страницы)
+        window.onload = function() {
+            if (localStorage.getItem('musicPlaying') === 'true') {
+                const savedTime = localStorage.getItem('musicTime');
+                if (savedTime) { audio.currentTime = savedTime; }
+                
+                audio.play().then(updateButtonText).catch(() => {
+                    console.log("Браузер ждет взаимодействия");
+                });
+            }
+        };
+
+        // 2. Клик по кнопке (Включение/Выключение)
+        btn.onclick = function() {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    localStorage.setItem('musicPlaying', 'true');
+                    updateButtonText();
+                });
+            } else {
+                audio.pause();
+                localStorage.setItem('musicPlaying', 'false');
+                updateButtonText();
+            }
+        };
+
+        // 3. Постоянное сохранение времени трека
+        setInterval(() => {
+            if (!audio.paused) {
+                localStorage.setItem('musicTime', audio.currentTime);
+            }
+        }, 1000);
+    </script>
+</body>
 </html>
