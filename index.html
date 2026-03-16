@@ -5,55 +5,68 @@
     <title>Талларион | Вход</title>
     <style>
         body { 
-            background-image: url('action.jpg'); background-attachment: fixed; background-size: 110% 110%; 
-            background-position: center; color: #d1d1d1; font-family: 'Georgia', serif; 
-            display: flex; align-items: center; justify-content: center; min-height: 100vh; 
-            margin: 0; overflow: hidden; cursor: crosshair; transition: background-position 0.1s ease-out;
+            background-image: url('action.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #d1d1d1; 
+            font-family: 'Georgia', serif; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            overflow: hidden;
         }
-        @keyframes glitch {
-            0% { text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9; }
-            25% { text-shadow: -2px 0 #ff00c1, 2px 0 #00fff9; }
-            100% { text-shadow: -1px 0 #e0e0e0, 1px 0 #fff; }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .cover { 
-            text-align: center; padding: 50px; background: rgba(10, 10, 10, 0.7); 
-            backdrop-filter: blur(15px); border: 1px solid rgba(224, 224, 224, 0.2); 
-            max-width: 600px; width: 90%; border-radius: 5px; animation: fadeIn 2s ease-out;
+            text-align: center; 
+            padding: 50px; 
+            background: rgba(17, 17, 17, 0.7); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(162, 134, 196, 0.3); 
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8); 
+            max-width: 600px; 
+            width: 90%; 
+            border-radius: 15px;
+            animation: fadeIn 2s ease-out;
         }
-        h1 { color: #a286c4; font-size: 2.8em; letter-spacing: 7px; text-transform: uppercase; transition: 0.3s; }
-        h1:hover { animation: glitch 0.3s infinite; color: #fff; }
-        .btn { 
-            padding: 18px 45px; border: 1px solid #a286c4; color: #a286c4; text-decoration: none; 
-            transition: 0.5s; display: inline-block; margin-top: 25px; font-weight: bold; letter-spacing: 3px;
-        }
-        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 30px #fff; border-color: #fff; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        #dialogue-box { display: none; margin: 20px 0; text-align: left; padding: 20px; border-left: 2px solid #fff; background: rgba(0,0,0,0.4); }
+        h1 { color: #a286c4; font-size: 2.8em; letter-spacing: 7px; text-transform: uppercase; margin: 0; text-shadow: 0 0 20px rgba(162, 134, 196, 0.5); }
+        .subtitle { color: #aaa; font-style: italic; margin-bottom: 30px; letter-spacing: 1px; }
+        .dialog-trigger { width: 100%; max-width: 280px; border-radius: 10px; cursor: pointer; transition: 0.5s; border: 1px solid #444; margin: 20px 0; }
+        .dialog-trigger:hover { border-color: #a286c4; transform: scale(1.05); box-shadow: 0 0 20px rgba(162, 134, 196, 0.4); }
+        #dialogue-box { display: none; margin: 20px 0; text-align: left; padding: 20px; background: rgba(0,0,0,0.5); border-left: 3px solid #a286c4; animation: fadeIn 0.5s; }
+        .char-name { color: #a286c4; font-weight: bold; font-size: 0.8em; text-transform: uppercase; display: block; margin-bottom: 5px; }
+        .btn { padding: 18px 45px; border: 1px solid #a286c4; color: #a286c4; text-decoration: none; transition: 0.5s; display: inline-block; margin-top: 25px; font-weight: bold; letter-spacing: 3px; border-radius: 5px; text-transform: uppercase; }
+        .btn:hover { background: #a286c4; color: #111; box-shadow: 0 0 30px rgba(162, 134, 196, 0.6); transform: translateY(-2px); }
     </style>
 </head>
-<body onmousemove="parallax(event)">
+<body>
     <audio id="voiceAudio" src="voice.mp3"></audio>
     <div class="cover">
-        <h1>Талларион</h1>
-        <p style="color: #aaa; font-style: italic;">Хроника Края Неполной Формы</p>
-        <img src="dialog.jpg" style="width:200px; cursor:pointer; border:1px solid #444;" onclick="toggleVoice()">
+        <h1>Край неполной формы</h1>
+        <p class="subtitle">Хроника хроноархитектора Таллариона</p>
+        <p style="color: #a286c4; font-size: 0.9em;">Нажми на артефакт, чтобы услышать историю</p>
+        <img src="dialog.jpg" class="dialog-trigger" onclick="toggleVoice()">
         <div id="dialogue-box">
-            <span style="color:#a286c4; font-size:0.8em;">СИСТЕМА:</span> — Ты уверен, что эта запись сохранится?<br>
-            <span style="color:#a286c4; font-size:0.8em;">АРХИВ:</span> — Пока есть читатель, мир будет существовать.
+            <div style="margin-bottom:10px;"><span class="char-name">Варг:</span> — Ты уверен, что эта запись сохранится? Талларион угасает.</div>
+            <div><span class="char-name">Люмин:</span> — Пока есть тот, кто читает эти строки, образ будет жить.</div>
         </div>
-        <br><a href="chapter1.html" class="btn">ЧИТАТЬ</a>
+        <br>
+        <a href="chapter1.html" class="btn" onclick="killVoice()">ВОЙТИ В ТАЛЛАРИОН</a>
     </div>
     <script>
-        function parallax(e) {
-            let x = (window.innerWidth - e.pageX * 2) / 100;
-            let y = (window.innerHeight - e.pageY * 2) / 100;
-            document.body.style.backgroundPosition = `calc(50% + ${x}px) calc(50% + ${y}px)`;
-        }
+        localStorage.setItem('musicPlaying', 'false');
+        localStorage.removeItem('musicTime');
+        const voice = document.getElementById('voiceAudio');
+        const box = document.getElementById('dialogue-box');
         function toggleVoice() {
-            const v = document.getElementById('voiceAudio');
-            const b = document.getElementById('dialogue-box');
-            if (v.paused) { v.play(); b.style.display = "block"; } else { v.pause(); b.style.display = "none"; }
+            if (voice.paused) { voice.play(); box.style.display = "block"; } 
+            else { voice.pause(); box.style.display = "none"; }
         }
+        function killVoice() { voice.pause(); voice.currentTime = 0; }
     </script>
 </body>
 </html>
