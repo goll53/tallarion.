@@ -13,8 +13,8 @@
             color: #d1d1d1; font-family: 'Georgia', serif; line-height: 1.8; margin: 0; padding: 20px; 
         }
         .container { max-width: 800px; margin: 40px auto; padding: 40px; background: rgba(17, 17, 17, 0.9); border: 1px solid #333; border-radius: 8px; }
-        h2 { color: #a286c4; text-align: center; text-transform: uppercase; }
-        img { width: 100%; border-radius: 5px; margin: 25px 0; }
+        h2 { color: #a286c4; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
+        img { width: 100%; border-radius: 5px; margin: 25px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
         .nav-container { display: flex; justify-content: space-between; border-top: 1px solid #333; padding-top: 20px; margin-top: 40px; }
         .nav-link { color: #a286c4; text-decoration: none; border: 1px solid #a286c4; padding: 12px 25px; font-weight: bold; text-transform: uppercase; font-size: 0.8em; }
         .nav-link:hover { background: #a286c4; color: #000; }
@@ -22,10 +22,12 @@
     </style>
 </head>
 <body>
+
     <div class="music-player">
         <audio id="bgMusic" src="music.mp3" loop></audio>
         <button id="musicBtn" style="background:none; border:none; color:#a286c4; cursor:pointer; font-weight:bold;">🎵 МУЗЫКА: ВЫКЛ</button>
     </div>
+
     <div class="container">
         <h2>Глава II. Локация и персонаж</h2>
 
@@ -63,56 +65,39 @@
             <a href="chapter3.html" class="nav-link">К ФИНАЛУ →</a>
         </div>
     </div>
+
     <script>
         const audio = document.getElementById('bgMusic');
         const btn = document.getElementById('musicBtn');
-        function updateBtn() { btn.innerText = audio.paused ? "🎵 МУЗЫКА: ВЫКЛ" : "🎵 МУЗЫКА: ВКЛ"; }
+
+        function updateBtn() { 
+            btn.innerText = audio.paused ? "🎵 МУЗЫКА: ВЫКЛ" : "🎵 МУЗЫКА: ВКЛ"; 
+        }
+
         window.onload = function() {
             if (localStorage.getItem('musicPlaying') === 'true') {
                 const savedTime = localStorage.getItem('musicTime');
                 if (savedTime) audio.currentTime = savedTime;
-                audio.play().then(updateBtn).catch(e => console.log("Ждем клика"));
-            }
-        };
-        btn.onclick = function() {
-            if (audio.paused) { audio.play().then(() => { localStorage.setItem('musicPlaying', 'true'); updateBtn(); }); }
-            else { audio.pause(); localStorage.setItem('musicPlaying', 'false'); updateBtn(); }
-        };
-        setInterval(() => { if (!audio.paused) localStorage.setItem('musicTime', audio.currentTime); }, 1000);
-    </script>
-</body>
-</html>
-        // Подхватываем состояние музыки при загрузке
-        window.onload = function() {
-            if (localStorage.getItem('musicPlaying') === 'true') {
-                const savedTime = localStorage.getItem('musicTime');
-                if (savedTime) { audio.currentTime = savedTime; }
-                
-                audio.play().then(updateButtonText).catch(() => {
-                    console.log("Ожидание действия пользователя");
-                });
-            }
-        };
-     // Управление музыкой
-        btn.onclick = function() {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    localStorage.setItem('musicPlaying', 'true');
-                    updateButtonText();
-                });
-            } else {
-                audio.pause();
-                localStorage.setItem('musicPlaying', 'false');
-                updateButtonText();
+                audio.play().then(updateBtn).catch(e => console.log("Ожидание клика"));
             }
         };
 
-        // Сохранение времени
-        setInterval(() => {
-            if (!audio.paused) {
-                localStorage.setItem('musicTime', audio.currentTime);
+        btn.onclick = function() {
+            if (audio.paused) { 
+                audio.play().then(() => { 
+                    localStorage.setItem('musicPlaying', 'true'); 
+                    updateBtn(); 
+                }); 
+            } else { 
+                audio.pause(); 
+                localStorage.setItem('musicPlaying', 'false'); 
+                updateBtn(); 
             }
+        };
+
+        setInterval(() => { 
+            if (!audio.paused) localStorage.setItem('musicTime', audio.currentTime); 
         }, 1000);
     </script>
 </body>
-</html>   
+</html>
