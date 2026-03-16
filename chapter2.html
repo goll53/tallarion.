@@ -5,54 +5,124 @@
     <title>Талларион | Глава II</title>
     <style>
         body { 
-            background-image: url('texture.jpg'); background-attachment: fixed; background-size: cover; background-position: center; 
-            color: #d1d1d1; font-family: 'Georgia', serif; line-height: 1.8; margin: 0; padding: 20px; 
+            background-image: url('texture.jpg'); 
+            background-attachment: fixed; 
+            background-size: 110% 110%; 
+            background-position: center; 
+            color: #d1d1d1; 
+            font-family: 'Georgia', serif; 
+            line-height: 1.8; 
+            margin: 0; 
+            padding: 20px; 
+            cursor: crosshair;
+            transition: background-position 0.1s ease-out;
+            overflow-x: hidden;
         }
-        @keyframes pageLoad { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @keyframes glitch {
+            0% { text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9; }
+            25% { text-shadow: -2px 0 #ff00c1, 2px 0 #00fff9; }
+            100% { text-shadow: -1px 0 #e0e0e0, 1px 0 #fff; }
+        }
+
         .container { 
-            max-width: 800px; margin: 60px auto; padding: 40px; background: rgba(17, 17, 17, 0.75); 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(162, 134, 196, 0.3); 
-            border-radius: 12px; animation: pageLoad 1.5s ease-out; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            max-width: 800px; 
+            margin: 60px auto; 
+            padding: 40px; 
+            background: rgba(10, 10, 10, 0.85); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(162, 134, 196, 0.2);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
-        h2 { color: #a286c4; text-align: center; text-transform: uppercase; letter-spacing: 4px; text-shadow: 0 0 15px rgba(162, 134, 196, 0.5); }
-        h3 { color: #a286c4; border-left: 3px solid #a286c4; padding-left: 15px; margin-top: 40px; }
-        img { width: 100%; border-radius: 8px; margin: 30px 0; transition: 0.5s; }
+
+        h2 { color: #a286c4; text-align: center; text-transform: uppercase; letter-spacing: 4px; transition: 0.3s; }
+        h2:hover { animation: glitch 0.3s infinite; color: #fff; }
+
+        h3 { color: #a286c4; border-left: 3px solid #a286c4; padding-left: 15px; margin-top: 40px; text-transform: uppercase; font-size: 1.1em; }
+
+        /* Стиль иконки (i) */
+        .info-trigger {
+            color: #fff;
+            background: rgba(162, 134, 196, 0.3);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            cursor: help;
+            margin-left: 5px;
+            position: relative;
+            vertical-align: middle;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .info-trigger:hover {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 10px #fff;
+        }
+
+        .info-trigger .tooltip {
+            visibility: hidden; width: 300px; background: #000; color: #fff; padding: 20px; 
+            border: 1px solid #fff; position: absolute; z-index: 1001; bottom: 150%; left: 50%; 
+            margin-left: -150px; opacity: 0; transition: 0.3s; font-size: 0.9em; line-height: 1.5; font-style: normal;
+            font-family: 'Georgia', serif; font-weight: normal; text-transform: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,1);
+        }
+        .info-trigger:hover .tooltip { visibility: visible; opacity: 1; }
+
+        img { width: 100%; border-radius: 5px; margin: 30px 0; transition: 0.5s; }
         img:hover { transform: scale(1.02); }
+        
         .nav-container { display: flex; justify-content: space-between; border-top: 1px solid rgba(162, 134, 196, 0.2); padding-top: 30px; margin-top: 50px; }
-        .nav-link { color: #a286c4; text-decoration: none; border: 1px solid #a286c4; padding: 12px 30px; font-weight: bold; text-transform: uppercase; font-size: 0.8em; letter-spacing: 2px; transition: 0.4s; }
-        .nav-link:hover { background: #a286c4; color: #111; box-shadow: 0 0 20px rgba(162, 134, 196, 0.6); letter-spacing: 4px; }
+        .nav-link { color: #a286c4; text-decoration: none; border: 1px solid #a286c4; padding: 12px 30px; font-weight: bold; text-transform: uppercase; font-size: 0.8em; transition: 0.4s; }
+        .nav-link:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 20px #fff; }
+        
         .music-player { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); border: 1px solid #a286c4; border-radius: 50px; padding: 10px 20px; z-index: 1000; }
-        #progress-bar { position: fixed; top: 0; left: 0; height: 5px; background: linear-gradient(to right, #a286c4, #fff); width: 0%; z-index: 9999; box-shadow: 0 0 10px #a286c4; }
+        #progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: #fff; width: 0%; z-index: 9999; box-shadow: 0 0 10px #fff; }
     </style>
 </head>
-<body>
+<body onmousemove="parallax(event)">
     <div id="progress-bar"></div>
+    
     <div class="music-player">
         <audio id="bgMusic" src="music.mp3" loop></audio>
-        <button id="musicBtn" style="background:none; border:none; color:#a286c4; cursor:pointer; font-weight:bold;">🎵 МУЗЫКА: ВЫКЛ</button>
+        <button id="musicBtn" onclick="toggleMusic()" style="background:none; border:none; color:#a286c4; cursor:pointer; font-weight:bold;">🎵 МУЗЫКА: ВЫКЛ</button>
     </div>
+
     <div class="container">
         <h2>Глава II. Локация и персонаж</h2>
 
         <h3>2.1. Выбранная локация: пограничный ярус и его особенности</h3>
         <p>Повествование переносится в один из самых хрупких уголков Таллариона — пограничный ярус, известный как Край Неполной Формы. Он не принадлежит ни к стабильным нижним слоям, ни к подвижным верхним, а существует словно между мирами, удерживаясь только остаточной целостностью образов.
 Пространство здесь неустойчиво: шаг, сделанный вперёд, может растянуться или сократиться, а возвращение назад не гарантирует того же положения. Очертания местности дрожат, как будто мир сомневается в собственной форме, и каждый объект кажется одновременно реальным и зыбким.
-Время здесь течёт слоями. Прошлое не исчезает, а накапливается на настоящем: в одном уголке можно увидеть остатки давно ушедших событий, которые физически соседствуют с текущим моментом. Именно в таких местах нарушение Закона Сохранения Образа становится заметным первым — ярус словно колеблется на границе возможного, показывая, как мир начинает распадаться.</p>
-
-        <span class="secret-note">[тихая долина]
+Время здесь течёт слоями. Прошлое не исчезает, а накапливается на настоящем: в одном уголке можно увидеть остатки давно ушедших событий, которые физически соседствуют с текущим моментом. Именно в таких местах нарушение Закона Сохранения Образа становится заметным первым — ярус словно колеблется на границе возможного, показывая, как мир начинает распадаться. Здесь часто можно наткнуться на локации, подобные Тихой долине 
+            <span class="info-trigger">i
                 <span class="tooltip"><b>История о тихой долине:</b><br><br>Есть место, которое называют Тихой долиной. Там почти не слышно звуков энергии согласия. Многие считают, что это единственное место в мире, где можно услышать настоящую тишину — редкое явление для Края Неполной Формы.</span>
-            </span>.
+            </span>. </p>
+
+        
         
         <img src="texture.jpg" alt="Край Неполной Формы">
 
+        <p>Местные жители рассказывают легенды о том, как в моменты сильных искажений в небе появляется блуждающий мост 
+            <span class="info-trigger">i
+                <span class="tooltip"><b>Слухи о блуждающем мосте:</b><br><br>Жители иногда рассказывают о мосте, который появляется только ночью. Он соединяет разные части мира, но утром исчезает. Некоторые утверждают, что этот мост появляется там, где мир пытается восстановить утраченную гармонию.</span>
+            </span>. 
+            Он кажется абсолютно реальным, пока первые лучи света не начинают растворять его контуры.
+        </p>
+        
         <h3>2.2. Происхождение и устройство этой области</h3>
         <p>Край Неполной Формы появился не случайно. Он возник на стыке ярусов, где устойчивость нижних пластов встречается с подвижностью верхних. Ранее эта зона была прочной, но со временем, под давлением нарастающих искажений, формы начали дрожать и терять прежнюю ясность.
 Структура области необычна: она состоит из сплетения пространственных волн, которые переплетаются между собой, создавая ощущение зыбкости. Здесь почти невозможно предсказать, куда приведёт движение, или как изменится форма предметов и ландшафтов. Каждое пространство обладает памятью — оно хранит отпечатки прошлых событий, которые иногда возникают как полупрозрачные, но ощутимые следы.
 Эта область живёт по своим законам. Законы соседних ярусов сохраняются частично, но их влияние ослабевает. Каждая форма, каждый объект здесь подвержен постоянной проверке: сможет ли он удержать свой образ, или исчезнет, растворившись в нестабильности.</p>
 
-        <span class="secret-note">[блуждающий мост]
-                <span class="tooltip"><b>Слухи о блуждающем мосте:</b><br><br>Жители иногда рассказывают о мосте, который появляется только ночью. Он соединяет разные части мира, но утром исчезает. Некоторые утверждают, что этот мост появляется там, где мир пытается восстановить утраченную гармонию.</span>
-            </span>.
+        
         
         <h3>2.3. Персонаж: форма, роль, способ существования</h3>
         <p>В Крае Неполной Формы обитает существо, известное среди редких наблюдателей как Люмиар. Оно не имеет привычного тела: его форма постоянно колеблется, подстраиваясь под окружающий ярус и его изменчивые очертания.
@@ -76,22 +146,46 @@
             <a href="chapter3.html" class="nav-link">ФИНАЛ →</a>
         </div>
     </div>
+
     <script>
+        function parallax(e) {
+            let x = (window.innerWidth - e.pageX * 2) / 100;
+            let y = (window.innerHeight - e.pageY * 2) / 100;
+            document.body.style.backgroundPosition = `calc(50% + ${x}px) calc(50% + ${y}px)`;
+        }
+
         const audio = document.getElementById('bgMusic');
         const btn = document.getElementById('musicBtn');
-        function updateBtn() { btn.innerText = audio.paused ? "🎵 МУЗЫКА: ВЫКЛ" : "🎵 МУЗЫКА: ВКЛ"; }
+
+        function updateBtn() { 
+            btn.innerText = audio.paused ? "🎵 МУЗЫКА: ВЫКЛ" : "🎵 МУЗЫКА: ВКЛ"; 
+        }
+
+        function toggleMusic() {
+            if (audio.paused) { 
+                audio.play().then(() => { 
+                    localStorage.setItem('musicPlaying', 'true'); 
+                    updateBtn(); 
+                }); 
+            } else { 
+                audio.pause(); 
+                localStorage.setItem('musicPlaying', 'false'); 
+                updateBtn(); 
+            }
+        }
+
         window.onload = function() {
             if (localStorage.getItem('musicPlaying') === 'true') {
                 const savedTime = localStorage.getItem('musicTime');
                 if (savedTime) audio.currentTime = savedTime;
-                audio.play().then(updateBtn).catch(e => console.log("Кликни"));
+                audio.play().then(updateBtn).catch(e => {});
             }
         };
-        btn.onclick = function() {
-            if (audio.paused) { audio.play().then(() => { localStorage.setItem('musicPlaying', 'true'); updateBtn(); }); }
-            else { audio.pause(); localStorage.setItem('musicPlaying', 'false'); updateBtn(); }
-        };
-        setInterval(() => { if (!audio.paused) localStorage.setItem('musicTime', audio.currentTime); }, 1000);
+
+        setInterval(() => { 
+            if (!audio.paused) localStorage.setItem('musicTime', audio.currentTime); 
+        }, 1000);
+
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
