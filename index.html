@@ -4,71 +4,65 @@
     <meta charset="UTF-8">
     <title>Талларион | Вход</title>
     <style>
-        body { background: #0a0a0c; color: #d1d1d1; font-family: 'Georgia', serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        .cover { text-align: center; border: 1px solid #333; padding: 40px; background: #111; box-shadow: 0 0 50px rgba(162, 134, 196, 0.1); max-width: 600px; width: 90%; }
+        body { 
+            background-image: url('action.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #d1d1d1; 
+            font-family: 'Georgia', serif; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+        .cover { 
+            text-align: center; 
+            border: 1px solid #333; 
+            padding: 40px; 
+            background: rgba(17, 17, 17, 0.9); /* Полупрозрачный фон */
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8); 
+            max-width: 600px; 
+            width: 90%; 
+            border-radius: 10px;
+        }
         h1 { color: #a286c4; font-size: 2.5em; letter-spacing: 5px; text-transform: uppercase; margin: 0; }
-        .subtitle { color: #888; font-style: italic; margin-bottom: 30px; }
-        
+        .subtitle { color: #aaa; font-style: italic; margin-bottom: 30px; }
         .dialog-trigger { width: 100%; max-width: 300px; border-radius: 8px; cursor: pointer; transition: 0.4s; border: 1px solid #333; margin: 20px 0; }
-        .dialog-trigger:hover { border-color: #a286c4; transform: scale(1.02); box-shadow: 0 0 20px rgba(162, 134, 196, 0.2); }
-        
+        .dialog-trigger:hover { border-color: #a286c4; transform: scale(1.02); }
         #dialogue-box { display: none; margin: 20px 0; text-align: left; padding: 20px; background: #000; border-left: 2px solid #a286c4; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
         .char-name { color: #a286c4; font-weight: bold; font-size: 0.8em; text-transform: uppercase; display: block; }
         .btn { padding: 15px 40px; border: 1px solid #a286c4; color: #a286c4; text-decoration: none; transition: 0.5s; display: inline-block; margin-top: 20px; font-weight: bold; letter-spacing: 2px; }
         .btn:hover { background: #a286c4; color: #000; }
     </style>
 </head>
 <body>
-
     <audio id="voiceAudio" src="voice.mp3"></audio>
-
     <div class="cover">
         <h1>Край неполной формы</h1>
         <p class="subtitle">Хроника хроноархитектора Таллариона</p>
-
-        <p style="color: #a286c4; margin-bottom: 5px;">Слушать вступление</p>
-        <p style="font-size: 0.8em; font-style: italic; margin-top: 0;">нажми на картинку ↓</p>
-        
-        <img src="dialog.jpg" alt="Слушать диалог" class="dialog-trigger" onclick="toggleVoice()">
-
+        <p style="color: #a286c4;">Слушать вступление</p>
+        <img src="dialog.jpg" class="dialog-trigger" onclick="toggleVoice()">
         <div id="dialogue-box">
-            <div style="margin-bottom: 10px;">
-                <span class="char-name">Персонаж 1:</span> — Ты уверен, что эта запись сохранится?
-            </div>
-            <div>
-                <span class="char-name">Персонаж 2:</span> — Пока есть тот, кто читает эти строки, образ будет жить.
-            </div>
+            <div><span class="char-name">Персонаж 1:</span> — Ты уверен, что эта запись сохранится?</div>
+            <div><span class="char-name">Персонаж 2:</span> — Пока есть тот, кто читает эти строки, образ будет жить.</div>
         </div>
-
         <br>
         <a href="chapter1.html" class="btn" onclick="killVoice()">ВОЙТИ В ТАЛЛАРИОН</a>
     </div>
-
     <script>
-        // Сброс настроек фоновой музыки (для следующих глав)
         localStorage.setItem('musicPlaying', 'false');
         localStorage.removeItem('musicTime');
-
         const voice = document.getElementById('voiceAudio');
         const box = document.getElementById('dialogue-box');
-
         function toggleVoice() {
-            if (voice.paused) {
-                voice.play();
-                box.style.display = "block";
-            } else {
-                voice.pause();
-                box.style.display = "none";
-            }
+            if (voice.paused) { voice.play(); box.style.display = "block"; } 
+            else { voice.pause(); box.style.display = "none"; }
         }
-
-        // Функция, которая "убивает" звук при уходе со страницы
-        function killVoice() {
-            voice.pause();
-            voice.currentTime = 0; // Сброс на начало
-        }
+        function killVoice() { voice.pause(); voice.currentTime = 0; }
     </script>
 </body>
 </html>
