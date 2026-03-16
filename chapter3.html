@@ -9,24 +9,60 @@
             color: #d1d1d1; font-family: 'Georgia', serif; line-height: 1.8; margin: 0; padding: 20px; 
         }
         @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; transform: scale(1.02); } 100% { opacity: 0.8; } }
+        
         .container { 
             max-width: 800px; margin: 60px auto; padding: 40px; background: rgba(17, 17, 17, 0.8); 
-            backdrop-filter: blur(15px); border: 1px solid rgba(162, 134, 196, 0.4); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(162, 134, 196, 0.4); 
             border-radius: 12px; text-align: center; box-shadow: 0 10px 50px rgba(0,0,0,0.7);
         }
+        
         h2 { color: #a286c4; text-transform: uppercase; letter-spacing: 5px; text-shadow: 0 0 20px rgba(162, 134, 196, 0.6); }
         .final-img { width: 70%; max-width: 350px; border-radius: 50%; filter: drop-shadow(0 0 20px #a286c4); margin: 40px 0; animation: pulse 4s infinite ease-in-out; }
-        .nav-container { display: flex; justify-content: center; border-top: 1px solid rgba(162, 134, 196, 0.2); padding-top: 40px; margin-top: 40px; }
+        
+        /* Блок Книги отзывов */
+        .feedback-box {
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(162, 134, 196, 0.05);
+            border: 1px dashed rgba(162, 134, 196, 0.4);
+            border-radius: 8px;
+        }
+        .feedback-title { color: #a286c4; font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: block; }
+        
+        .btn-feedback {
+            display: inline-block;
+            padding: 12px 25px;
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            text-decoration: none;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.4s;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .btn-feedback:hover { 
+            background: #fff; 
+            color: #111; 
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); 
+        }
+
+        .nav-container { display: flex; justify-content: center; border-top: 1px solid rgba(162, 134, 196, 0.2); padding-top: 40px; margin-top: 20px; }
         .nav-link { color: #a286c4; text-decoration: none; border: 1px solid #a286c4; padding: 15px 45px; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; transition: 0.5s; }
         .nav-link:hover { background: #a286c4; color: #111; box-shadow: 0 0 30px #a286c4; transform: translateY(-3px); }
+        
         .music-player { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); border: 1px solid #a286c4; border-radius: 50px; padding: 10px 20px; z-index: 1000; }
     </style>
 </head>
 <body>
+
     <div class="music-player">
         <audio id="bgMusic" src="music.mp3" loop></audio>
         <button id="musicBtn" style="background:none; border:none; color:#a286c4; cursor:pointer; font-weight:bold;">🎵 МУЗЫКА: ВЫКЛ</button>
     </div>
+
     <div class="container">
         <h2>Глава III. Точка перелома</h2>
         
@@ -57,7 +93,13 @@
             Так завершается хроника: не финалом, а моментом закрепления того, что ещё можно сохранить, в мире, где каждая форма — драгоценна и каждое вмешательство — риск.
         </div>
 
-     <div class="nav-container">
+     <div class="feedback-box">
+            <span class="feedback-title">Терминал связи с архивом</span>
+            <p style="font-size: 0.85em; font-style: italic; color: #aaa;">Ваше сообщение будет зафиксировано в вечности.</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdnTmXO6xZYQSXjoCLGl2BjhmGyAmKoUrubwniF6555S0e_CA/viewform?usp=header" target="_blank" class="btn-feedback">Оставить отзыв</a>
+        </div>
+
+        <div class="nav-container">
             <a href="index.html" class="nav-link" onclick="stopMusic()">Завершить фиксацию</a>
         </div>
     </div>
@@ -76,7 +118,11 @@
             if (audio.paused) { audio.play().then(() => { localStorage.setItem('musicPlaying', 'true'); updateBtn(); }); }
             else { audio.pause(); localStorage.setItem('musicPlaying', 'false'); updateBtn(); }
         };
-        function stopMusic() { audio.pause(); localStorage.setItem('musicPlaying', 'false'); localStorage.removeItem('musicTime'); }
+        function stopMusic() { 
+            audio.pause(); 
+            localStorage.setItem('musicPlaying', 'false'); 
+            localStorage.removeItem('musicTime'); 
+        }
     </script>
 </body>
 </html>
