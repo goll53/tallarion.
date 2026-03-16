@@ -2,32 +2,33 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Талларион | Глава III</title>
+    <title>Талларион | Финал</title>
     <style>
         body { background: #0a0a0c; color: #d1d1d1; font-family: 'Georgia', serif; line-height: 1.8; margin: 0; padding: 20px; }
-        .container { max-width: 800px; margin: 40px auto; padding: 40px; background: #111; border: 1px solid #333; box-shadow: 0 0 30px rgba(162, 134, 196, 0.1); }
-        h2 { color: #a286c4; text-align: center; border-bottom: 1px solid #333; padding-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
-        p { margin-bottom: 20px; text-align: justify; }
+        .container { max-width: 800px; margin: 40px auto; padding: 40px; background: #111; border: 1px solid #333; box-shadow: 0 0 30px rgba(162, 134, 196, 0.1); text-align: center; }
+        h2 { color: #a286c4; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #333; padding-bottom: 20px; }
+        p { text-align: justify; margin-bottom: 20px; }
         
         /* Стиль для финальной картинки */
-        .final-img { display: block; width: 80%; max-width: 450px; margin: 40px auto; filter: drop-shadow(0 0 15px #a286c4); border-radius: 50%; }
+        .final-img { width: 80%; max-width: 450px; border-radius: 50%; filter: drop-shadow(0 0 15px #a286c4); margin: 40px 0; }
         
-        /* Стиль для цитаты-заключения */
-        .final-quote { font-style: italic; color: #aaa; border-left: 2px solid #a286c4; padding-left: 20px; margin: 40px 0; background: #161618; padding: 25px; border-radius: 0 10px 10px 0; }
+        /* Цитата */
+        .final-quote { font-style: italic; color: #aaa; border-left: 2px solid #a286c4; padding-left: 20px; margin: 40px 0; background: #161618; padding: 25px; text-align: left; }
         
-        .music-player { position: fixed; bottom: 20px; right: 20px; background: rgba(17,17,17,0.9); padding: 10px; border: 1px solid #a286c4; border-radius: 50px; z-index: 1000; }
-        
-        .footer-nav { text-align: center; margin-top: 60px; }
-        .btn-home { padding: 15px 35px; border: 1px solid #a286c4; color: #a286c4; text-decoration: none; transition: 0.4s; font-weight: bold; text-transform: uppercase; font-size: 0.8em; }
-        .btn-home:hover { background: #a286c4; color: #000; box-shadow: 0 0 15px #a286c4; }
-        
-        .status { color: #a286c4; font-size: 0.9em; letter-spacing: 4px; margin-top: 30px; opacity: 0.7; }
+        /* КНОПКА ВОЗВРАТА (по центру) */
+        .nav-container { display: flex; justify-content: center; align-items: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #333; }
+        .nav-link { color: #a286c4; text-decoration: none; border: 1px solid #a286c4; padding: 15px 35px; transition: 0.4s; font-weight: bold; font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; }
+        .nav-link:hover { background: #a286c4; color: #000; box-shadow: 0 0 20px #a286c4; }
+
+        .music-player { position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: rgba(0,0,0,0.8); border-radius: 50px; padding: 5px; border: 1px solid #a286c4; }
+        .status { color: #a286c4; font-size: 0.7em; letter-spacing: 5px; margin-top: 30px; opacity: 0.5; }
     </style>
 </head>
 <body>
 
     <div class="music-player">
-        <audio controls src="music.mp3" loop></audio>
+        <audio id="bgMusic" src="music.mp3" loop></audio>
+        <button id="musicBtn" style="background:none; border:none; color:#a286c4; cursor:pointer; padding:10px;">🎵 МУЗЫКА</button>
     </div>
 
     <div class="container">
@@ -60,12 +61,23 @@
             Так завершается хроника: не финалом, а моментом закрепления того, что ещё можно сохранить, в мире, где каждая форма — драгоценна и каждое вмешательство — риск.
         </div>
 
-       <div class="footer-nav">
-            <div class="status">ФИКСАЦИЯ ЗАВЕРШЕНА</div>
-            <br><br><br>
-            <a href="index.html" class="btn-home">Вернуться к титульному листу</a>
+      <div class="nav-container">
+            <a href="index.html" class="nav-link" onclick="stopMusic()">Вернуться на главную</a>
         </div>
+        
+        <div class="status">ФИКСАЦИЯ ЗАВЕРШЕНА</div>
     </div>
 
+    <script src="script.js"></script>
+    
+    <script>
+        // Специальная функция для остановки музыки при выходе на главную
+        function stopMusic() {
+            localStorage.setItem('musicPlaying', 'false');
+            localStorage.removeItem('musicTime');
+        }
+    </script>
+</body>
+</html>
 </body>
 </html>
